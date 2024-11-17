@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Button Redirect</title>
+  <style>
+    body {
+      background-color: lightsteelblue;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      justify-content: flex-start;
+    }
+    
+    .top-section {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    img { 
+      width: 200px;
+      border-radius: 50%;
+      border: 7px solid darkslateblue;
+      object-fit: cover;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+      color: darkslateblue;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .button1 {
+      color: darkslateblue;
+      border-color: darkslateblue;
+      background-color: floralwhite;
+      border-style: solid;
+      margin-top: 10px;
+      border-radius: 30px;
+      height: 60px;
+      width: 200px;
+      transition: color 0.15s, background-color 0.15s, box-shadow 0.5s;
+      font-family: Times New Roman;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button1:active {
+      color: floralwhite;
+      background-color: darkslateblue;
+      box-shadow: 5px 7px 0 slateblue;
+    }
+    .button1:hover {
+      opacity: 0.8;
+    }
+
+    .bottom-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="top-section">
+    <h1>ameen.w</h1>
+    <img src="newsite.jpg" alt="little man">
+    <p>success is sequential,<br>not simultaneous</p>
+  </div>
+
+  <div class="bottom-section">
+    <button class="button1" onclick="redirectEmail1()">e-mail me</button>
+    <button class="button1" onclick="redirectEmail2()">spotify playlist</button>
+    <button class="button1" onclick="redirectEmail3()">discord</button>
+    <button class="button1" onclick="redirectEmail4()">telegram</button>
+  </div>
+
+  <script>
+    function redirectEmail1() {
+      window.location.href = "mailto:ameenmuhammed.w@gmail.com";
+    }
+
+    function redirectEmail2() {
+      window.location.href = "https://open.spotify.com/playlist/41woYxQM9RTyqQ7ZdZ4Uw7?si=p8eS39o7STGUAg_sw2kb8Q&pi=1gLv8URsQ-K98";
+    }
+
+    function redirectEmail3() {
+      window.location.href = "https://discord.gg/9WJFUYUk";
+    }
+
+    function redirectEmail4() {
+      window.location.href = "t.me/ameen_vex";
+    }
+  </script>
+</body>
+</html>
