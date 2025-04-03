@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ameen - Welcome!</title>
+    <meta name="description" content="Welcome to ameen's personal space. Learn more, listen to music, check out favourite movies & books, and get in touch.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lusitana:wght@400;700&family=Times+New+Roman&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+      /* Basic body styling */
+      body {
+          font-family: 'Lusitana', 'Times New Roman', Times, serif; background-color: #f9fafb; color: #374151;
+          /* --- Added: Disable Text Selection --- */
+          -webkit-user-select: none; /* Safari */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* IE10+/Edge */
+          user-select: none; /* Standard */
+          /* --- Added: Attempt to disable drag selection in some browsers --- */
+          -webkit-user-drag: none;
+          user-drag: none;
+      }
+      h1, h2, h3, h4, h5, h6 { font-family: 'Times New Roman', Times, serif; }
+      /* Navbar Styling */
+      #navbar { position: fixed; z-index: 50; transition: transform 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out, right 0.4s ease-in-out, border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out, box-shadow 0.4s ease-in-out, padding 0.4s ease-in-out, max-width 0.4s ease-in-out, margin 0.4s ease-in-out; top: 1.6rem; left: 1.6rem; right: 1.6rem; width: auto; max-width: 24rem; margin-left: auto; margin-right: auto; border-radius: 1.5rem; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); padding: 0.75rem 1.25rem; transform: translateY(0); overflow: hidden; }
+      #navbar.navbar-hidden { transform: translateY(calc(-100% - 2.5rem)); }
+      .navbar-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+      .navbar-name { font-weight: 700; font-size: 1.125rem; color: #1f2937; }
+      #navbar-toggle { background: none; border: none; padding: 0.25rem; margin: -0.25rem; cursor: pointer; color: #4b5563; transition: color 0.3s ease; }
+      #navbar-toggle:hover { color: #4f46e5; } #navbar-toggle:focus { outline: none; }
+      #nav-links { transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out; max-height: 0; overflow: hidden; width: 100%; }
+      #nav-links.active { max-height: 500px; margin-top: 0.75rem; }
+      #nav-links a { display: block; padding: 0.5rem 0.25rem; text-align: center; color: #000000; border-radius: 0.5rem; transition: background-color 0.3s ease, color 0.3s ease; margin-bottom: 0.25rem; }
+      #nav-links a:last-child { margin-bottom: 0; } #nav-links a:hover { background-color: #e5e7eb; color: #000000; }
+      /* Form Input Styles */
+      .form-input, .form-textarea {
+          border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 0.75rem 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+           /* --- Added: Allow selection specifically for form inputs --- */
+          -webkit-user-select: text; /* Safari */
+          -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* IE10+/Edge */
+          user-select: text; /* Standard */
+       }
+      .form-input:focus, .form-textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3); }
+      /* Section Fade-in Animation */
+      .section-fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+      .section-fade-in.visible { opacity: 1; transform: translateY(0); }
+      /* Hero Section Styling */
+      #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-bottom: 10vh; padding-top: 10vh; }
+      /* Cartoon Button Styles */
+      .cartoon-button { display: inline-block; position: relative; padding: 0.8rem 1.8rem; border: 2px solid #374151; color: #374151; background-color: transparent; font-size: 1.1rem; font-weight: bold; text-decoration: none; overflow: hidden; cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; margin-top: 1.5rem; }
+      .cartoon-button .button-text { position: relative; z-index: 2; }
+      .cartoon-box { position: absolute; width: 10px; height: 10px; background-color: #1f2937; opacity: 0; transform: scale(0) rotate(0deg); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1; }
+      .cartoon-box.box-tl { top: -5px; left: -5px; } .cartoon-box.box-tr { top: -5px; right: -5px; }
+      .cartoon-box.box-bl { bottom: -5px; left: -5px; } .cartoon-box.box-br { bottom: -5px; right: -5px; }
+      .cartoon-button:hover .cartoon-box { opacity: 1; transform: scale(1) rotate(90deg); }
+      .cartoon-button:hover { border-color: #4f46e5; color: #4f46e5; }
+      .cartoon-button:hover .box-tl { transition-delay: 0s; } .cartoon-button:hover .box-tr { transition-delay: 0.1s; }
+      .cartoon-button:hover .box-bl { transition-delay: 0.2s; } .cartoon-button:hover .box-br { transition-delay: 0.15s; }
+      /* Audio Player Styles */
+      input[type=range].accent-accent::-webkit-slider-thumb { background-color: #4f46e5; }
+      input[type=range].accent-accent::-moz-range-thumb { background-color: #4f46e5; }
+      #audio-player.hidden { display: none; }
+      #play-pause-btn { width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; background-color: #4f46e5; color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.2s ease, transform 0.1s ease; cursor: pointer; outline: none; border: none; }
+      #play-pause-btn:hover { background-color: #4338ca; }
+      #play-pause-btn:active { transform: scale(0.95); }
+      #navbar-toggle .fa { vertical-align: middle; font-size: 1.5rem; line-height: 1; font-family: FontAwesome; }
+      #play-pause-btn .fa { vertical-align: middle; font-size: 1.5rem; line-height: 1; font-family: FontAwesome; margin: 0; padding: 0; }
+      /* Movie/Book Section Styles */
+      /* .movie-card, .book-card { min-height: 550px; } */
+
+      /* --- Added: Prevent image dragging --- */
+      img {
+        -webkit-user-drag: none;
+        user-drag: none;
+      }
+    </style>
+    <script>
+      // Tailwind configuration
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Lusitana', 'Times New Roman', 'Times', 'serif'], serif: ['Times New Roman', 'Times', 'serif'], },
+            colors: { accent: { DEFAULT: '#4f46e5', 'hover': '#4338ca' } },
+            borderRadius: { 'xl': '1rem', '2xl': '1.5rem' },
+            maxWidth: { 'sm': '24rem', 'md': '28rem', 'lg': '32rem', 'xl': '36rem', '2xl': '42rem', '3xl': '48rem', '4xl': '56rem', '5xl': '64rem', '6xl': '72rem', '7xl': '80rem', }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="antialiased" oncontextmenu="return false;"> <nav id="navbar">
+        <div class="flex flex-wrap items-center justify-between">
+            <div class="navbar-top-row">
+                <span class="navbar-name">Ameen's BIO</span>
+                <button id="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+                    <i class="fa toggle-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="nav-links" class="w-full">
+                <a href="#about">About</a> <a href="#music">Music</a> <a href="#movies">Movies</a> <a href="#books">Books</a> <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="mb-6">
+            <img src="Hero.jpg" alt="ameen" class="w-60 h-60 md:w-44 md:h-44 rounded-full border-4 border-white shadow-lg mx-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/180x180/E2E8F0/4A5568?text=Error';">
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold text-gray-800 font-serif">ameen</h1>
+        <p class="mt-3 text-lg text-gray-600">say hi</p>
+        <a href="#contact" class="cartoon-button">
+            <span class="button-text">Message</span> <span class="cartoon-box box-tl"></span><span class="cartoon-box box-tr"></span> <span class="cartoon-box box-bl"></span><span class="cartoon-box box-br"></span>
+        </a>
+    </section>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="about" class="mb-20 md:mb-24 scroll-mt-24 section-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 text-center text-gray-800 font-serif">A Little About Me</h2>
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg max-w-3xl mx-auto">
+                <p class="text-lg text-gray-700 leading-relaxed text-left">
+                  Hey! I'm Ameen.<br>
+You probably know me already, so this may seem unnecessary—but curiosity got the better of me. Either way, you might find something interesting here. As for hobbies: Non existent, but I find math and philosophy intriguing and psychology fascinating.
+                </p>
+            </div>
+        </section>
+
+        <section id="music" class="mb-20 md:mb-24 scroll-mt-24 section-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 text-center text-gray-800 font-serif">Favorite listen </h2>
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg max-w-md mx-auto">
+                <div class="flex flex-col items-center">
+                    <img id="album-cover" src="Music.jpg" alt="Album Cover" class="w-48 h-48 md:w-60 md:h-60 rounded-lg shadow-md mb-6 object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x300/E2E8F0/4A5568?text=Error';">
+                    <p id="song-title" class="text-2xl font-semibold text-gray-800 text-center">Belisarius</p>
+                    <p id="artist-name" class="text-lg text-gray-600 text-center mb-6">Farya Faraji</p>
+                    <audio id="audio-player" src="Music.mp3" class="hidden"> Your browser does not support the audio element. </audio>
+                    <div class="w-full max-w-xs mx-auto">
+                        <input type="range" id="progress-bar" value="0" step="0.1" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer mb-3 accent-accent">
+                        <div class="flex justify-between text-sm text-gray-500 mb-3 px-1"> <span id="current-time">0:00</span><span id="duration">0:00</span> </div>
+                        <div class="flex justify-center items-center space-x-6">
+                             <button id="play-pause-btn" aria-label="Play">
+                                 <i class="fa play-pause-icon" aria-hidden="true"></i>
+                             </button>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </section>
+
+         <section id="movies" class="mb-20 md:mb-24 scroll-mt-24 section-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 text-center text-gray-800 font-serif">Favourite watch</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col movie-card">
+                    <img src="M1.jpg" alt="The Green Mile" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x600/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">The Green Mile</h3>
+                        <p class="text-sm text-gray-600">I love tom hanks!</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col movie-card">
+                    <img src="M2.jpg" alt="Movie Poster 2" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x600/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">The Secret Life of Walter Mitty</h3>
+                        <p class="text-sm text-gray-600">"Beautiful things don't ask for attention" </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col movie-card">
+                     <img src="M3.jpg" alt="Movie Poster 3" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x600/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Better Call Saul</h3>
+                        <p class="text-sm text-gray-600">lalo</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col movie-card">
+                    <img src="M4.jpg" alt="Movie Poster 4" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x600/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Forrest Gump</h3>
+                        <p class="text-sm text-gray-600">"Life was like a box of chocolates. You never know what you're gonna get"</p>
+                    </div>
+                </div>
+            </div>
+             </section>
+
+        <section id="books" class="mb-20 md:mb-24 scroll-mt-24 section-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 text-center text-gray-800 font-serif">Favorite read</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col book-card">
+                    <img src="N1.jpg" alt="Book Cover 1" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x450/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">Thus Spoke Zarathustra</h3>
+                        <p class="text-sm text-gray-500 mb-2">Friedrich Nietzsche</p>
+                        <p class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col book-card">
+                    <img src="N2.jpg" alt="Book Cover 2" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x450/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">The Brothers Karamazov</h3>
+                        <p class="text-sm text-gray-500 mb-2">Fyodor Dostoevsky</p>
+                        <p class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col book-card">
+                    <img src="N3.jpg" alt="Book Cover 3" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x450/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">Meditations</h3>
+                        <p class="text-sm text-gray-500 mb-2">Marcus Aurelius</p>
+                        <p class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col book-card">
+                    <img src="N4.jpg" alt="Book Cover 4" class="w-full h-auto object-cover" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/300x450/E2E8F0/4A5568?text=Error';">
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">High output management</h3>
+                        <p class="text-sm text-gray-500 mb-2">Andrew Grove</p>
+                        <p class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+        <section id="contact" class="scroll-mt-24 section-fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 text-center text-gray-800 font-serif">Get In Touch</h2>
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg max-w-xl mx-auto">
+                <p class="text-lg text-center text-gray-700 mb-8"> Use the form below or drop me an email! </p>
+                <form id="contact-form" action="#" method="POST" class="space-y-6">
+                    <div> <label for="name" class="block text-sm font-medium text-gray-600 mb-1">Name</label> <input type="text" id="name" name="name" required class="form-input w-full" placeholder="Your Name"> </div>
+                    <div> <label for="message" class="block text-sm font-medium text-gray-600 mb-1">Message</label> <textarea id="message" name="message" rows="5" required class="form-textarea w-full" placeholder="Your message..."></textarea> </div>
+                    <div> <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-medium text-white bg-accent hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-colors duration-300"> Send Message </button> </div>
+                </form>
+                <div class="text-center mt-8">
+                    </a> </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-100 text-gray-500 mt-2py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center"> <p>&copy; <span id="current-year"></span> ameen bio</p> </div>
+    </footer>
+
+    <script>
+        // --- Get Navbar Elements ---
+        const navbar = document.getElementById('navbar');
+        const toggleButton = document.getElementById('navbar-toggle');
+        const navLinks = document.getElementById('nav-links');
+        const toggleIcon = toggleButton ? toggleButton.querySelector('.toggle-icon') : null;
+
+        // --- Navbar Hide/Show on Scroll ---
+        let lastScrollY = window.scrollY; const hideThreshold = 50, showAtTopThreshold = 10;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (navLinks && navLinks.classList.contains('active')) { navLinks.classList.remove('active'); if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false'); if (toggleIcon) toggleIcon.className = 'fa fa-bars toggle-icon'; }
+            if (currentScrollY > lastScrollY && currentScrollY > hideThreshold) { if (navbar) navbar.classList.add('navbar-hidden'); } else if (currentScrollY < lastScrollY || currentScrollY <= showAtTopThreshold) { if (navbar) navbar.classList.remove('navbar-hidden'); }
+            lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+        }, { passive: true });
+
+        // --- Navbar Menu Toggle ---
+        if (toggleButton && navLinks && toggleIcon) {
+            toggleIcon.className = 'fa fa-bars toggle-icon';
+            toggleButton.addEventListener('click', () => {
+                navLinks.classList.toggle('active'); const isActive = navLinks.classList.contains('active');
+                toggleButton.setAttribute('aria-expanded', isActive);
+                toggleIcon.className = isActive ? 'fa fa-times toggle-icon' : 'fa fa-bars toggle-icon';
+            });
+        } else { console.error("Navbar toggle elements not found!"); }
+
+        // --- Section Fade-In Animation ---
+        const fadeElems = document.querySelectorAll('.section-fade-in');
+        if (fadeElems.length > 0) { const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, observerOptions); fadeElems.forEach(elem => observer.observe(elem)); }
+
+        // --- Footer Year Update ---
+        const currentYearSpan = document.getElementById('current-year');
+        if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
+
+        // --- Contact Form Mailto Logic ---
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+
+                const nameInput = document.getElementById('name');
+                const messageInput = document.getElementById('message');
+                const recipientEmail = 'ameenmuhammed.w@gmail.com'; // Your target email address
+
+                if (nameInput && messageInput) {
+                    const subject = encodeURIComponent(nameInput.value); // Get name and URL-encode it for the subject
+                    const body = encodeURIComponent(messageInput.value);    // Get message and URL-encode it for the body
+
+                    // Construct the mailto link
+                    const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+                    // Attempt to open the user's default mail client
+                    window.location.href = mailtoLink;
+
+                    // Optional: You might want to reset the form after generating the mailto link
+                    // contactForm.reset();
+                    // Optional: Or show a message indicating what happened
+                    // alert('Your email client should open now. Please review and send the message.');
+
+                } else {
+                    console.error("Could not find name or message input fields.");
+                    alert("Error: Could not prepare email. Input fields missing.");
+                }
+            });
+        } else {
+            console.error("Contact form element not found!");
+        }
+
+        // --- Audio Player Logic ---
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn ? playPauseBtn.querySelector('.play-pause-icon') : null;
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const durationDisplay = document.getElementById('duration');
+
+        function formatTime(seconds) { if (isNaN(seconds) || seconds < 0) return "0:00"; const minutes = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; }
+
+        if (audioPlayer && playPauseBtn && progressBar && currentTimeDisplay && durationDisplay && playPauseIcon) {
+            playPauseIcon.className = 'fa fa-play play-pause-icon';
+            playPauseBtn.addEventListener('click', () => { if (audioPlayer.paused || audioPlayer.ended) { audioPlayer.play().catch(error => { console.error("Audio Playback Error:", error); alert("Could not play audio."); playPauseIcon.className = 'fa fa-play play-pause-icon'; playPauseBtn.setAttribute('aria-label', 'Play'); }); } else { audioPlayer.pause(); } });
+            audioPlayer.addEventListener('play', () => { playPauseIcon.className = 'fa fa-pause play-pause-icon'; playPauseBtn.setAttribute('aria-label', 'Pause'); });
+            audioPlayer.addEventListener('pause', () => { playPauseIcon.className = 'fa fa-play play-pause-icon'; playPauseBtn.setAttribute('aria-label', 'Play'); });
+            audioPlayer.addEventListener('timeupdate', () => { if (audioPlayer.duration && isFinite(audioPlayer.duration)) { progressBar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100; } else { progressBar.value = 0; } currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime); });
+            progressBar.addEventListener('input', () => { if (audioPlayer.duration && isFinite(audioPlayer.duration)) { const seekTime = (progressBar.value / 100) * audioPlayer.duration; if (isFinite(seekTime)) audioPlayer.currentTime = seekTime; } });
+            audioPlayer.addEventListener('loadedmetadata', () => { if (audioPlayer.duration && isFinite(audioPlayer.duration)) { progressBar.max = 100; durationDisplay.textContent = formatTime(audioPlayer.duration); } else { durationDisplay.textContent = "0:00"; console.warn("Audio duration could not be determined."); } });
+            audioPlayer.addEventListener('ended', () => { progressBar.value = 0; currentTimeDisplay.textContent = formatTime(0); playPauseIcon.className = 'fa fa-play play-pause-icon'; playPauseBtn.setAttribute('aria-label', 'Play'); });
+        } else { console.warn("Audio player elements not found! Player controls inactive."); if (!playPauseBtn) console.error("Play/Pause button specifically not found!"); if (!playPauseIcon) console.error("Play/Pause ICON element specifically not found!"); }
+
+        // --- Added: Attempt to disable certain key combinations (like Ctrl+C, Ctrl+U, F12) ---
+        document.addEventListener('keydown', function(e) {
+          // Disable F12 (Inspect Element)
+          if (e.key === "F12" || e.keyCode === 123) {
+            e.preventDefault();
+          }
+          // Disable Ctrl+Shift+I (Inspect Element)
+          if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            e.preventDefault();
+          }
+          // Disable Ctrl+Shift+J (Console)
+          if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+            e.preventDefault();
+          }
+          // Disable Ctrl+U (View Source)
+          if (e.ctrlKey && e.key === 'U') {
+            e.preventDefault();
+          }
+          // Disable Ctrl+S (Save Page) - might interfere with form saving if not careful
+          if (e.ctrlKey && e.key === 'S') {
+            e.preventDefault();
+          }
+          // Disable Ctrl+C (Copy) - Be cautious, this might be too restrictive.
+          // If you only want to disable copying specific text, use the CSS approach.
+          // This JS approach blocks the key combo itself.
+           if (e.ctrlKey && e.key === 'C') {
+            // Check if the target is an input/textarea to allow copying from forms
+             if (!(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+               e.preventDefault();
+             }
+           }
+        });
+
+        // --- Added: Detect DevTools (Simple interval check - not foolproof) ---
+        // This is more of a deterrent than a complete block.
+        // const devtoolsCheckInterval = setInterval(() => {
+        //     const widthThreshold = window.outerWidth - window.innerWidth > 160;
+        //     const heightThreshold = window.outerHeight - window.innerHeight > 160;
+        //     const isDevToolsOpen = widthThreshold || heightThreshold;
+
+        //     // Basic debugger check
+        //     let start = new Date().getTime();
+        //     debugger; // This line pauses execution if DevTools are open
+        //     let end = new Date().getTime();
+
+        //     if (isDevToolsOpen || (end - start) > 100) { // If DevTools dimensions changed or debugger took time
+        //         console.log("Developer tools detected.");
+        //         // You could redirect, show a message, etc. Be careful not to annoy regular users.
+        //         // document.body.innerHTML = '<h1>Developer Tools are not allowed.</h1>';
+        //     }
+        // }, 1000); // Check every second
+
+        // Note: The debugger check can be easily bypassed and the dimension check isn't always reliable.
+        // Use these techniques judiciously. The primary methods are CSS user-select and oncontextmenu.
+
+    </script>
+
+</body>
+</html>
